@@ -1,0 +1,168 @@
+# Git Bash
+$ ssh-keygen -t rsa -b 1024 -N "" -C email_address
+
+
+$ git init <my proj>
+$ open .git    # MAC
+
+
+$ git remote add origin <https://my url>
+$ cat .git/config
+
+
+$ git config --global user.name
+$ git config --global user.email
+$ git config --global core.autocrlf true    # line endings
+$ git config --global color.ui auto
+$ git config --local user.name <my name>
+$ git config --list
+
+
+$ git add <my file.txt>    # move file to "staging" area
+$ git commit -m "my comments - file modification"
+# --> which files in staging area become a part of which commit
+
+
+# 1. working tree, 2. staging area, 3. head (most recent commit)
+$ git diff    # changes made have not yet staged (difference between working tree and staging area)
+$ git diff --staged    # changes between staged files and most recent commit in history
+$ git diff HEAD    # compare working tree to head commit (most recent commit in history)
+
+$ git diff --color-words
+$ git diff --word-diff
+$ git diff --stat
+
+$ git diff --name-status <my branch 1>...<my branch 2>
+
+
+$ git log
+$ git log --oneline
+$ git log --stat
+$ git log --stat -- <my folder/my file.txt>    # log stops after files are moved
+$ git log --stat -M --follow -- <my folder/my file.txt>    # log follows file across moves
+$ git log --patch    # show difference between commits
+$ git log --graph --all --decorate --oneline
+
+
+$ git rm <my file.txt>    # delete file from file system
+$ git add -u .    # stage all deleted files (. tells git to start at current directory and recurse all the way down as far as it can go)
+$ git rm --cached <my file.txt>    # remove file from "staging" area
+$ git rest    # "undo" git add . and remove file from "staging" area
+
+
+$ git mv <old destination/my file.txt> <new destination/my file.txt>
+$ git add -A .    # handle situation where lots of files are moved
+
+
+$ touch .gitignore    # create .gitignore at root of project
+$ git ls-files --others --ignored --exclude-standard    # show ignored files
+
+#----- .gitignore (example) -----
+myfile.txt
+*.log
+# comments inside .gitignore
+tmp_folder/    # ignore files in folder
+#----- .gitignore -----
+
+
+$ git branch    # check which branch I'm on
+$ git branch -r    # r for remote
+$ git branch <my branch>    # create a new branch
+$ git branch -d <my branch>    # delete branch and info won't be shown in log
+$ git branch -a    # list both remote-tracking and local branches
+
+
+# checkout is for changing branches
+$ git checkout <my branch>    # changing branches
+$ git checkout <commit reference>    # detached HEAD; go back to previous version for exploring purpose
+# latest node is called "head"
+$ git checkout master    # back to the latest version - master branch
+$ git checkout -- <my file.txt>    # undo/discard changes made to file
+$ git checkout -b <my branch>    # create a new branch and checkout at the same time
+$ git checkout -b <my branch> origin/myremotebranch    # "download" a branch which was created remotely
+
+
+# merge commits from "my branch" to "master"
+$ git checkout master
+$ git merge <my branch>
+
+
+# update "my feature branch" with the latest "my development branch"; sync repositories
+$ git checkout <my development>
+$ git pull origin <my development>
+$ git checkout <my feature>
+$ git merge <my development>
+
+
+# if there is a conflict while merging (@ master & merge feature branch to master)
+<<<<<<< HEAD
+"content in master" or "branch current checkout to"
+=======
+"content in incoming branch"
+>>>>>>> "incoming branch; attempt to merge"
+
+$ git merge --abort    # abort merge while having conflicts
+$ git merge --squash "target branch"    # commit but not history
+
+
+$ git log --oneline --decorate --graph --all -10    # show branch info
+
+
+# remote tracking branches (origin/*) are the middle way between branches at local laptop and at GitHub.com
+$ git remote add origin <destination URL>    # setup location where we send information to from laptop; origin is the name of the destination
+$ git remote set-url origin <destination URL>    # change URL
+$ git remote rm origin    # remove remote
+$ git remote -v
+
+# fetch, pull, push operations
+$ git fetch origin    # grab Github.com files to remote tracking branches
+$ git pull origin    # pull = fetch + merge
+$ git pull origin <my branch>    # pull latest files from remote and ensure local "my branch" is up to date (check???)
+$ git pull <my development> <my feature>    # merge development branch to feature branch; keep feature branch up to date (check???)
+$ git push origin    # only for all matching branches (local/remote)
+$ git push origin <my feature branch>    # only for my feature branch (local/remote)  (check???)
+$ git push -u origin master    # difference?
+$ git push <myremote_origin> <mybranch_master>    # if remote doesn't have master, then you need to specify  (check???)
+$ git push origin --delete <myremotebranch>    # delete remote branch
+
+
+# git reset is for shaping history in repo
+# git reset has - mixed(default), soft(combine commits), hard(erase things)
+$ git reset HEAD    # take changes out of staging area (mixed; default option)
+$ git reset --soft HEAD~2    # the most recent 2 commits
+$ git reset --hard HEAD~3    # throw the most recent 3 commits away
+$ git checkout <commit reference> <old_file.txt>    # pull a specific version of file back to current repo
+
+# revert: create a new commit (commit + 1 from earlier commit)
+
+
+$ git reflog    # track commit made and discarded
+$ git reset --hard <commit reference>    # restore code base
+
+$ gitk
+
+#----- change default home directory while opening git bash -----
+C:\Program Files\Git\etc\bash.bashrc
+# added the following two lines into bash.bashrc
+if [[ $(pwd) = $HOME ]]; then cd Desktop/Shih/projects
+fi
+#----- change default home directory while opening git bash ------
+
+
+$ git clone http://login@url   # alternative: ssh
+#----- Use pcron to sync GitHub repo/Unix automatically -----
+git clone <https://url.git> .
+ 
+git config credential.helper 'store'
+ 
+git pull <https://url.git>
+ 
+pcrontab -e
+* * * * * git --git-dir=<unix_path.git> --work-tree=<unix_path> pull <https://url.git>
+ 
+pcrontab -l
+ 
+nohup pcron &
+
+
+# resources: https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB-

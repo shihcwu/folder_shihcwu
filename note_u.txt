@@ -1,0 +1,116 @@
+# connect to server
+>> ssh <username>@<server URL>
+
+>> source .bash_profile    # .profile, .bash_profile, .bashrc
+
+# create a folder
+>> mkdir <folder>
+
+# delete a folder
+>> rm -r <folder>
+
+# move/rename file
+>> mv -i <file.txt> <destination>
+>> mv <name.sas7bdat> <new_name.sas7bdat>
+
+# copy file
+>> cp <source> <destination>
+>> cp </prod/user/file1.txt> .
+>> rsync -r -t <source> <destination> # copy folder
+>> rsync -t <source.sas> <destination.sas> # copy a file
+
+# search a pattern
+>> grep -i <str_pattern> *.py 
+>> grep -s <str1> <str2>
+>> find . -name "*.log" | xargs grep -i "^err"   # find keyword
+
+# search folder belong to me
+>> find </prod/path> -user <username> -exec ls -l {} \;
+
+# change permission
+>> chmod 755 .profile
+>> chmod +x my_python.py    # executable file, python my_python.py
+>> chmod -R 775 </prod/path>   # change folder permission
+
+# check jobs run on server
+>> ps
+>> pss   # check my programs running on server
+>> ps -ef | grep <username>   # list jobs
+>> ps -fu <username>
+>> kill -9 <PID>
+>> ps aux | grep mysearchword   # search jobs, such as vnc, firefox, etc..
+>> vncserver -kill :myport   # kill VNC
+>> bin/bash   # switch bash in VNC konsole
+
+# output the first 100 line records to a file
+>> head -100 <file> > <file.txt>
+>> head <file> # read file content
+>> tail -100 text.txt text_reduced.txt
+
+# zip/unzip file
+>> bzip2 -z <myfile>
+>> bzip2 -d <myfile.bz2>
+>> tar -cf <myzip.tar> <myfile>
+>> tar -xf <myzip.tar>
+>> tar -xzf <myfile.tar.gz>  # unzip .tar.gz file
+
+# Launch graphic display for PyCharm/IntelliJ/Firefox on another server (2) with VNC while using server (1)
+# don't need to export if do this on server with VNC
+$ export DISPLAY=my_server:my_port
+$ firefox &
+
+# help file
+>> grep --help
+>> man grep # help command for MAC
+
+# abort to execute a command
+Ctrl + c
+
+# monitor SAS job
+>> sasgsub -gridgetstatus all
+>> sasgsub -gridsubmitpgm <saspgm.sas>
+
+# check space usage
+>> du
+>> du -sk
+
+# create log
+>> wc -l <*.sas> > <log.log>
+>> wc -l <*.sas> | head -7
+>> wc -l <*.sas> | tail -5
+>> wc <*.sas> >> <log2.log> # also save info into file
+
+# other commands
+>> which python
+>> which firefox
+>> firefox -p
+>> whoami
+>> pwd
+>> cd # “tab” to search options
+>> ls -lahtr # dash flags for options = ls -l -a -h -t -r
+>> clear
+>> history
+>> bash
+# hidden file has name starting with .
+# pcron (job scheduler)
+
+
+# move file between different unix servers
+# copy the <source> directory and place it at <destination> on NPVgw
+>> rsync -av <your squirrel EID>@squirrel:{source} {destination}
+
+# sFTP from one server to another
+# login to Server1
+>> sftp <server URL>
+# type password
+>> lcd <location on server1>
+>> cd <location on server2>
+>> mget <file.txt> # copy file on server2 to server1
+
+# email
+>> mailx -s "-s for subject" email@email.com < <file.txt>
+
+##### vim #####
+i: insert
+Esc: exit
+Shift + q: exit mode
