@@ -1,74 +1,78 @@
+#########
+# 2018/12
+#########
+
 # connect to server
->> ssh <username>@<server URL>
+>> ssh <my_username>@<my_server_URL>
 
 >> source .bash_profile    # .profile, .bash_profile, .bashrc
 
 # create a folder
->> mkdir <folder>
+>> mkdir <my_folder>
 
 # delete a folder
->> rm -r <folder>
+>> rm -r <my_folder>
 
 # move/rename file
->> mv -i <file.txt> <destination>
->> mv <name.sas7bdat> <new_name.sas7bdat>
+>> mv -i <my_file.txt> <my_destination>
+>> mv <my_old_name.py> <my_new_name.py>
 
 # copy file
->> cp <source> <destination>
->> cp </prod/user/file1.txt> .
->> rsync -r -t <source> <destination> # copy folder
->> rsync -t <source.sas> <destination.sas> # copy a file
+>> cp <my_source> <my_destination>
+>> cp </my_path/my_file.txt> .
+>> rsync -r -t <my_source> <my_destination>    # copy folder
+>> rsync -t <my_source.sas> <my_destination.sas>    # copy a file
 
 # search a pattern
->> grep -i <str_pattern> *.py 
->> grep -s <str1> <str2>
->> find . -name "*.log" | xargs grep -i "^err"   # find keyword
+>> grep -i <my_str_pattern> *.py 
+>> grep -s <my_str1> <my_str2>
+>> find . -name "*.log" | xargs grep -i "^err"    # find keyword
 
 # search folder belong to me
->> find </prod/path> -user <username> -exec ls -l {} \;
+>> find </my_path> -user <my_username> -exec ls -l {} \;
 
 # change permission
 >> chmod 755 .profile
->> chmod +x my_python.py    # executable file, python my_python.py
->> chmod -R 775 </prod/path>   # change folder permission
+>> chmod +x <my_file.py>    # executable file: python my_file.py
+>> chmod -R 775 </my_path>    # change folder permission
 
 # check jobs run on server
 >> ps
->> pss   # check my programs running on server
->> ps -ef | grep <username>   # list jobs
->> ps -fu <username>
+>> pss    # check my programs running on server
+>> ps -ef | grep <my_username>    # list jobs
+>> ps -fu <my_username>
 >> kill -9 <PID>
->> ps aux | grep mysearchword   # search jobs, such as vnc, firefox, etc..
->> vncserver -kill :myport   # kill VNC
->> bin/bash   # switch bash in VNC konsole
+>> ps aux | grep <my_search_keyword>    # search jobs, such as vnc, firefox, etc..
+>> vncserver -kill :<my_port>    # kill VNC
+>> bin/bash    # switch bash in VNC konsole
 
 # output the first 100 line records to a file
->> head -100 <file> > <file.txt>
->> head <file> # read file content
->> tail -100 text.txt text_reduced.txt
+>> head -100 <my_file> > <my_result_file.txt>
+>> head <my_file> # read file content
+>> tail -100 <my_text.txt> > <my_text_reduced.txt>
 
 # zip/unzip file
->> bzip2 -z <myfile>
->> bzip2 -d <myfile.bz2>
->> tar -cf <myzip.tar> <myfile>
->> tar -xf <myzip.tar>
->> tar -xzf <myfile.tar.gz>  # unzip .tar.gz file
+>> bzip2 -z <my_file>
+>> bzip2 -d <my_file.bz2>
+>> tar -cf <my_zip.tar> <my_file>
+>> tar -xf <my_zip.tar>
+>> tar -xzf <my_file.tar.gz>    # unzip .tar.gz file
 
-# Launch graphic display for PyCharm/IntelliJ/Firefox on another server (2) with VNC while using server (1)
+# launch graphic display for PyCharm/IntelliJ/Firefox/Sublime Text on another server (2) with VNC while using server (1)
 # don't need to export if do this on server with VNC
-$ export DISPLAY=my_server:my_port
+$ export DISPLAY=<my_server>:<my_port>
 $ firefox &
 
 # help file
 >> grep --help
->> man grep # help command for MAC
+>> man grep    # help command for MAC
 
 # abort to execute a command
 Ctrl + c
 
 # monitor SAS job
 >> sasgsub -gridgetstatus all
->> sasgsub -gridsubmitpgm <saspgm.sas>
+>> sasgsub -gridsubmitpgm <my_sas_pgm.sas>
 
 # check space usage
 >> du
@@ -78,7 +82,18 @@ Ctrl + c
 >> wc -l <*.sas> > <log.log>
 >> wc -l <*.sas> | head -7
 >> wc -l <*.sas> | tail -5
->> wc <*.sas> >> <log2.log> # also save info into file
+>> wc <*.sas> >> <log2.log>    # also save info into file
+
+# count number of lines in file
+$ wc -l <my_file.txt>
+$ zcat <my_file.gz> | wc -l
+$ zcat <my_file.gz> | head -10 > <my_result_file.txt>
+
+# cut the first column of a delimited data file
+$ cut -d, -f1 --complement delimited.csv > delimited_cut.csv
+$ cut -d'|' -f1 --complement delimited.csv > delimited_cut.csv    # pipe delimited file
+# delete rows #2 to #4 from a file
+$ sed '2,4d' <my_file> > <my_new_file>
 
 # other commands
 >> which python
@@ -86,8 +101,8 @@ Ctrl + c
 >> firefox -p
 >> whoami
 >> pwd
->> cd # “tab” to search options
->> ls -lahtr # dash flags for options = ls -l -a -h -t -r
+>> cd    # “tab” to search options
+>> ls -lahtr    # dash flags for options = ls -l -a -h -t -r
 >> clear
 >> history
 >> bash
@@ -96,19 +111,19 @@ Ctrl + c
 
 
 # move file between different unix servers
-# copy the <source> directory and place it at <destination> on NPVgw
->> rsync -av <your squirrel EID>@squirrel:{source} {destination}
+# copy the <my_source> directory and place it at <my_destination> on another server
+>> rsync -av <my_username>@<my_server_1>:{my_source} {my_destination}
 
 # sFTP from one server to another
 # login to Server1
->> sftp <server URL>
+>> sftp <my_server_URL>
 # type password
 >> lcd <location on server1>
 >> cd <location on server2>
->> mget <file.txt> # copy file on server2 to server1
+>> mget <my_file.txt>    # copy file on server2 to server1
 
 # email
->> mailx -s "-s for subject" email@email.com < <file.txt>
+>> mailx -s "-s for subject" email@email.com < <my_file.txt>
 
 ##### vim #####
 i: insert
