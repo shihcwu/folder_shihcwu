@@ -1,0 +1,74 @@
+#############################################################
+# 2018/12
+# reference: Finance Foundations (Jim Stice & Earl Kay Stice)
+#############################################################
+
+Financial statements
+1. balance sheet
+2. income statement
+    -> revenue - cost = net income
+3. statement of cash flows
+    -> show activities of operating, investment, and financial
+
+Financial ratios
+1. debt ratio
+    -> total liability / total asset
+    -> average debt ratio for large companies is 50% ~ 60%
+2. current ratio (measure of liquidity)
+    -> current asset / current liability
+    -> banks prefer less stable companies with current ratios of 2:1 or higher (Walmart was ~0.88 in 2014)
+3. return on sales (measure of amount of profit earned per dollar of investment)
+    -> net income / sales
+    -> average return on sales for tech companies is over 20% (Walmart was ~3% in 2014 - thin margin)
+4. asset turnover (measure of company efficiency)
+    -> sales / total assets (Walmart was 2.33 in 2014)
+5. return on equity - ROE (measure of amount of profit earned per dollar of investment)
+    -> net income / stockholder's equity
+    -> most companies have a return on equity between 10~20% (Walmart was ~19.7% in 2014)
+6. price-earnings ratio measure of growth potential, earnings stability, and management capabilities)
+    -> market values of shares / net income
+    -> most companies have a price-earnings ratio between 10~30 (Walmart was 14.8 in 2014)
+
+
+operating cycle (80+50=130 days for Nike in 2014; McDonald's: 7 days)
+1. number of days sales and inventory (from raw material to sales of finished goods): 80 days for Nike in 2014
+2. average collection period (from sale of finished goods to collection of cash): 50 days for Nike in 2014
+
+
+business risk: price, credit, interest rate, exchange rate, and cash flow
+risk cannot be avoided by diversification is called beta-risk
+beta = (covrance between return of a company and return of market) / market return
+beta measures the market-wide risk that cannot be eliminated through diversification
+
+beta = 0; cash
+beta = 1; investment portfolio value fluctuates with the market
+beta > 1; value is very sensitive to market change
+
+beta ~ 0 (Walmart, McDonald's, Altria)
+beta ~ 1 (Microsoft, Google, Apple)
+beta > 1 (Catepiller, Ford, BoA, home construction industry)
+
+risk-free rate: inflation rate + time value of money (avg ~5% in U.S.)
+market return in US in the past 50/60 years is 11%
+
+equity risk premium: market return - risk-free rate: extra amount earned because of willings to invest in higher risk (11% - 5% = 6%)
+
+financial model: capital asset pricing model (CAPM)
+CAPM = risk-free rate + (beta * equity risk premium) = expected return
+Ford motor in 2014: 5% + (1.8 * 6%) = 15.8%
+Microsoft in 2014: 5% + (0.9 * 6%) = 10.7%
+Walmart in 2014: 5% + (0.36 * 6%) = 7.2%
+concepts of CAPM:
+1. investments should return at least the risk-free rate
+2. equity investments should have a higher rate of return
+3. beta represents the risk that cannot be diversified away
+
+capital structure: mix between owner investment and long-term borrowing cost of capital
+
+basic types of securities: stock & bond
+
+financial institutes: banks, investment banks, investment funds, insurance companies
+investment funds: index, managed, private-equity, hedge funds
+
+time value of money
+retained earnings
