@@ -100,7 +100,9 @@ POST /examples_index_name/_doc/_bulk
 {"delete": {"_id": "101"}}
 
 # import data with cURL
-$ curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/examples_index_name/_doc/_bulk?pretty" --data-binary "@my_data_file.jsonl"
+$ curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/examples_index_name/_doc/_bulk?pretty" --data-binary "@my_data_file_1.jsonl" && curl -H "Content-Type: application/json" -XPOST "http://localhost:9200/examples_index_name/_doc/_bulk?pretty" --data-binary "@my_data_file_2.jsonl"
+
+$ java -version
 
 # use cat API for information about cluster, node, index, etc..
 GET /_cat/health?v    # v for verbose
@@ -120,6 +122,15 @@ GET /examples_index_name/_doc/_mapping
 # complex: object, array, nested    # Lucene has no concept of inner objects
 # geo: geo-point, geo-shape
 # specialize: ip, completion, attchment
+
+# create an index
+PUT /examples
+{
+  "settings": {
+    "index.number_of_shards": 1,
+    "index.number_of_replicas": 0
+  }
+}
 
 # create an index with mappings
 PUT /examples_index_name/
@@ -182,6 +193,20 @@ POST _analyze
     "tokenizer": "standard",
     "filter": ["lowercase", "unique", "asciifolding"],
     "text": "My@email.com mY.email my_email my-email résumé"
+}
+
+GET _analyze
+{
+  "tokenizer": "letter",
+  "filter": ["lowercase"],
+  "text": "Brown.brown $brown fox $ brown @ dog https://www.google.com my@gmail.com"
+}
+
+GET _analyze
+{
+  "tokenizer": "uax_url_email",
+  "filter": ["lowercase"],
+  "text": "Brown.brown $brown fox $ brown @ dog https://www.google.com my@gmail.com"
 }
 
 # define a custome analyzer which uses standard analyzer (configure built-in analyzers and token filters)
@@ -465,7 +490,7 @@ GET /examples_index_name/_doc/_search
     }
 }
 
-# terms in specific order
+# terms in specific order (exact phrase)
 GET /examples_index_name/_doc/_search
 {
     "query": {
@@ -1553,7 +1578,7 @@ GET /examples_index_name/_search
     }
 }
 
-# match query will match documents with my_value_0 or my_value_1
+# match query will match documents with my_value_0 or my_value_1 ("vegetable" or "veget")
 # "match_phrase" under "should" is optional and it boosts scores
 GET /examples_index_name/_search
 {
@@ -1828,6 +1853,30 @@ GET /examples_stemming_index/_doc/_search
 # "should" - can weight criteria differently using boost
 # match, match with fuzziness, match_phrase, match_phrase_prefix, match_phrase with slop
 
+# boost score
+GET /examples_index_name/_search
+{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match_phrase": {
+                        "my_field_1": "brown dog"
+                    }
+                },
+                {
+                    "match_phrase": {
+                        "my_field_1": {
+                            "query": "a brown dog",
+                            "boost": 3
+                        }
+                    }
+                }
+            ]
+        }
+    }  
+}
+
 """
 GET _search
 {
@@ -1918,7 +1967,9 @@ GET /_msearch
 { "index": "examples_index_name"}
 { "query": { "match": {"my_field_1":"dog"}}}
 
-logstash -f my_logstash.conf
+$ bin/logstash -e "input { stdin { } } output { stdout {} }"
+$ cd \logstash\bin
+$ logstash -f my_logstash.conf
 ##### my_logstash.conf #####
 input {
     file {
