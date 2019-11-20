@@ -1,131 +1,182 @@
-#########
-# 2018/12
-#########
-
 # connect to server
->> ssh <my_username>@<my_server_URL>
+$ ssh <my_username>@<my_server_URL>
 
->> source .bash_profile    # .profile, .bash_profile, .bashrc
+$ source .bash_profile    # .profile, .bash_profile, .bashrc
+
+##### .bashrc #####
+#!/bin/sh
+
+umask 007
+
+#ulimit -n 32000
+
+alias my_server_shoutcut="ssh -X <my_username>@<my_server_URL>"
+
+if [ $HOSTNAME = "<my_server_1>" ] || [ $HOSTNAME = "<my_server_2>" ]; then
+    
+	unset JAVA_TOOL_OPTIONS
+
+	export JAVA_HOME=</my_java_home_folder/java/home>
+	export PYTHONIOENCODING=utf-8
+    conda activate <my_python_virtual_environment>
+    cd <my_folder>
+fi
+##### .bashrc #####
+
+# use SSH key to login Linux server
+$ ssh-keygen -t rsa -b 1024 -N "" -C <my_email_address>
+$ ssh-copy-id -i $HOME/.ssh/id_rsa.pub <my_username>@<my_server_URL>
 
 # create a folder
->> mkdir <my_folder>
+$ mkdir <my_folder>
 
 # delete a folder
->> rm -r <my_folder>
+$ rm -r <my_folder>
 
 # move/rename file
->> mv -i <my_file.txt> <my_destination>
->> mv <my_old_name.py> <my_new_name.py>
+$ mv -i <my_file.txt> <my_destination>
+$ mv <my_name.sas7bdat> <my_new_name.sas7bdat>
 
 # copy file
->> cp <my_source> <my_destination>
->> cp </my_path/my_file.txt> .
->> rsync -r -t <my_source> <my_destination>    # copy folder
->> rsync -t <my_source.sas> <my_destination.sas>    # copy a file
+$ cp <my_source> <my_destination>
+$ cp </my_folder/my_file.txt> .
+$ rsync -r -t <my_source> <my_destination>    # copy folder
+$ rsync -t <my_source.sas> <my_destination.sas>    # copy a file
 
 # search a pattern
->> grep -i <my_str_pattern> *.py 
->> grep -s <my_str1> <my_str2>
->> find . -name "*.log" | xargs grep -i "^err"    # find keyword
+$ grep -i <my_str_pattern> *.py 
+$ grep -s <my_str1> <my_str2>
+$ find . -name "*.log" | xargs grep -i "^err"    # find keyword
+
+$ grep -r <my_keyowrd_pattern> .    # search keyword in entire content of a directory
 
 # search folder belong to me
->> find </my_path> -user <my_username> -exec ls -l {} \;
+$ find </my_folder/my_path> -user <my_username> -exec ls -l {} \;
 
 # change permission
->> chmod 755 .profile
->> chmod +x <my_file.py>    # executable file: python my_file.py
->> chmod -R 775 </my_path>    # change folder permission
+$ chmod 755 .profile
+$ chmod +x my_python.py    # executable file, python my_python.py
+$ chmod -R 775 </my_folder/my_path>   # change folder permission
+
+$ sudo chown notme:notmygroup <my_file.txt>    # change owner of a file to different unix group
+
+$ newgrp <my_new_group>
+$ groups    # my_new_group is now the first of all your groups
 
 # check jobs run on server
->> ps
->> pss    # check my programs running on server
->> ps -ef | grep <my_username>    # list jobs
->> ps -fu <my_username>
->> kill -9 <PID>
->> ps aux | grep <my_search_keyword>    # search jobs, such as vnc, firefox, etc..
->> vncserver -kill :<my_port>    # kill VNC
->> bin/bash    # switch bash in VNC konsole
+$ ps
+$ pss    # check my programs running on server
+$ ps -ef | grep <my_username>    # list jobs
+$ ps -fu <my_username>
+$ kill -9 <my_PID>
+$ ps aux | grep <my_search_keyword>    # search jobs, such as vnc, firefox, etc..
+$ vncserver -kill :<my_port>    # kill VNC
+$ bin/bash    # switch bash in VNC konsole
 
 # output the first 100 line records to a file
->> head -100 <my_file> > <my_result_file.txt>
->> head <my_file> # read file content
->> tail -100 <my_text.txt> > <my_text_reduced.txt>
+$ head -100 <my_file.txt> > <my_result.txt>
+$ head <my_file>    # read file content
+$ tail -100 <my_file.txt> <my_file_tail_record.txt>
+
+# delete rows #2 to #4 from a file	
+$ sed '2,4d' <my_file.csv> > <my_reduced_file.csv>
+
+# cut columns and only keep column 1, 2, 27 to 56 for a tab-delimited file
+$ cut -d$'\t' -f1,2,27-56 <my_file.csv> > <my_file_reduced_columns.csv>
+
+# count number of lines (records) in file	
+$ wc -l <my_file.txt>	
+$ zcat <my_file.gz> | wc -l	
+$ zcat <my_file.gz> | head -10 > <my_result_file.txt>	
+
+$ cat my_file.csv | awk '{ print NF}'    # count # of columns
+$ sed -n '1209311p' <my_file.csv>    # view a specific line of record
+
+$ cmp <my_file_1.csv> <my_file_2.csv>    # compare two files byte by byte
+$ diff <my_file_1.csv> <my_file_2.csv> | cat -t    # show any special characters clearly - e.g. ^M for CR, ^I for tab
+$ grep "^M" <my_files.csv>    # ctrl+v+m for "^M"    find CR in my_files.csv
 
 # zip/unzip file
->> bzip2 -z <my_file>
->> bzip2 -d <my_file.bz2>
->> tar -cf <my_zip.tar> <my_file>
->> tar -xf <my_zip.tar>
->> tar -xzf <my_file.tar.gz>    # unzip .tar.gz file
+$ bzip2 -z <my_file>
+$ bzip2 -d <my_file.bz2>
+$ tar -cf <my_zip.tar> <my_file>
+$ tar -xf <my_zip.tar>
+$ tar -xzf <my_file.tar.gz>    # unzip .tar.gz file
 
-# launch graphic display for PyCharm/IntelliJ/Firefox/Sublime Text on another server (2) with VNC while using server (1)
-# don't need to export if do this on server with VNC
-$ export DISPLAY=<my_server>:<my_port>
+# Launch graphic display for PyCharm/IntelliJ/Firefox/Sublime Text on another server (#2) with VNC while using server (#1)
+# don't need to export, if do this on server with VNC
+$ export DISPLAY=<my_server_URL>:<my_port>
 $ firefox &
 
+$ curl localhost:9200
+
+$ ssh -L 5601:localhost:5601 <my_username>@<my_server_URL>    # Enable Windows to use Kibana which is launched on Unix server (tunnel screen back to Windows from Unix); execute from Windows
+
 # help file
->> grep --help
->> man grep    # help command for MAC
+$ grep --help
+$ man grep    # help command for MAC
 
 # abort to execute a command
-Ctrl + c
+$ Ctrl + c
 
 # monitor SAS job
->> sasgsub -gridgetstatus all
->> sasgsub -gridsubmitpgm <my_sas_pgm.sas>
+$ sasgsub -gridgetstatus all
+$ sasgsub -gridsubmitpgm <my_saspgm.sas>
 
 # check space usage
->> du
->> du -sk
+$ du
+$ du -sk
 
 # create log
->> wc -l <*.sas> > <log.log>
->> wc -l <*.sas> | head -7
->> wc -l <*.sas> | tail -5
->> wc <*.sas> >> <log2.log>    # also save info into file
-
-# count number of lines in file
-$ wc -l <my_file.txt>
-$ zcat <my_file.gz> | wc -l
-$ zcat <my_file.gz> | head -10 > <my_result_file.txt>
-
-# cut the first column of a delimited data file
-$ cut -d, -f1 --complement delimited.csv > delimited_cut.csv
-$ cut -d'|' -f1 --complement delimited.csv > delimited_cut.csv    # pipe delimited file
-# delete rows #2 to #4 from a file
-$ sed '2,4d' <my_file> > <my_new_file>
+$ wc -l <*.sas> > <log.log>
+$ wc -l <*.sas> | head -7
+$ wc -l <*.sas> | tail -5
+$ wc <*.sas> >> <log2.log>    # also save info into file
 
 # other commands
->> which python
->> which firefox
->> firefox -p
->> whoami
->> pwd
->> cd    # “tab” to search options
->> ls -lahtr    # dash flags for options = ls -l -a -h -t -r
->> clear
->> history
->> bash
-# hidden file has name starting with .
-# pcron (job scheduler)
+$ which python
+$ which firefox
+$ firefox -p
+$ whoami
+$ pwd
+$ cd    # “tab” to search options
+$ ls -lahtr    # dash flags for options = ls -l -a -h -t -r
+$ clear
+$ history
+$ bash
 
+# hidden file has name starting with .
+
+# pcron (job scheduler)
 
 # move file between different unix servers
 # copy the <my_source> directory and place it at <my_destination> on another server
->> rsync -av <my_username>@<my_server_1>:{my_source} {my_destination}
+$ rsync -av <my_username>@<my_server_URL>:{my_source} {my_destination}
 
 # sFTP from one server to another
-# login to Server1
->> sftp <my_server_URL>
+# login to Server #1
+$ sftp <my_server_URL>
 # type password
->> lcd <location on server1>
->> cd <location on server2>
->> mget <my_file.txt>    # copy file on server2 to server1
+$ lcd <location on server #1>
+$ cd <location on server #2>
+$ mget <my_file.txt>    # copy file on server2 to server1
 
 # email
->> mailx -s "-s for subject" email@email.com < <my_file.txt>
+$ mailx -s "-s for subject" email@email.com < <my_file.txt>
 
 ##### vim #####
 i: insert
 Esc: exit
 Shift + q: exit mode
+
+##### MySQL on server #####
+$ mysql -u my_username -p
+mysql> SHOW DATABASES;
+mysql> USE my_database;
+mysql> SHOW TABLES;
+mysql> CREATE TABLE my_table (my_column_1 INT PRIMARY KEY,my_column_2 VARCHAR(20),my_column_3 DATE);
+mysql> INSERT INTO my_table (my_column_1,my_column_2,my_column_3) VALUES(1,"2","2019-11-06")
+mysql> SELECT * FROM my_table WHERE my_column_3 > "2019-11-06"
+mysql> DESCRIBE my_table;
+mysql> DROP TABLE my_table;
+mysql> quit;
