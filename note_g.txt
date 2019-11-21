@@ -63,6 +63,7 @@ $ git log --patch    # show difference between commits
 $ git log --graph --all --decorate --oneline
 $ git log --oneline --decorate --graph --all -10    # show branch info
 $ gitk --follow <my_file.csv>    # track history of changes
+$ gitk <my_file.txt>    # check log of a file
 $ git show <my_commit_reference_id>    # changes from a commit
 
 
@@ -70,6 +71,9 @@ $ git rm <my_file.txt>    # delete file from file system
 $ git rm --cached <my_file.txt>    # remove files from "staging" area without deleting it in local (make it untracked file)
 $ git add -u .    # stage all deleted files (. tells git to start at current directory and recurse all the way down as far as it can go)
 $ git rest    # "undo" git add . and remove file from "staging" area
+
+
+$ git update-index --chmod=+x <my_script.py>    # change file permission on Windows
 
 
 $ git mv <my_old_destination/my_file.txt> <my_new_destination/my_file.txt>
@@ -95,10 +99,17 @@ $ git branch -d <my_branch>    # delete branch and info won't be shown in log
 $ git branch -a    # list both remote-tracking and local branches
 
 
+# rename a branch (at the branch which will be renamed)
+$ git branch -m <my_new_branch_name>
+$ git push origin :<my_old_branch_name> <my_new_branch_name>    # no need?
+$ git push origin -u <my_new_branch_name>
+
+
 # checkout is for changing branches
 $ git checkout <my_branch>    # changing branches
 $ git checkout <my_commit_reference>    # detached HEAD; go back to previous version for exploring purpose
 # latest node is called "head"
+$ git checkout <my_commit_reference> -- <my_file.txt>    # revert a file to previous version
 $ git checkout master    # back to the latest version - master branch
 $ git checkout -- <my_file.txt>    # undo/discard changes made to file
 $ git stash
@@ -110,7 +121,9 @@ $ git checkout -b <my_branch> origin/my_remote_branch    # "download" a branch w
 # merge some files from another my_branch_2 to current my_branch_1
 $ git checkout <my_branch_1>
 $ git checkout <my_branch_2> <my_files.csv>
-
+# checkout a file (my_change.py) from another branch (my_feature_2)
+git checkout my_feature_1
+git checkout my_feature_2 -- my_changes.java
 
 # update "my_feature_branch" with the latest "my_development_branch"; sync repositories
 $ git checkout <my_development>
@@ -164,9 +177,15 @@ $ git checkout <my_commit_reference> <my_old_file.txt>    # pull a specific vers
 
 # revert: create a new commit (commit + 1 from earlier commit)
 
+$ git revert <my_commit_reference>    # revert changes made in a commit
 
 $ git reflog    # track commit made and discarded
 $ git reset --hard <my_commit_reference>    # restore code base
+
+
+# if content of a large git-lfs file cannot be seen
+$ git lfs install
+$ git pull
 
 
 #----- change default home directory while opening git bash -----
