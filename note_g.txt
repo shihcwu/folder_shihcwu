@@ -118,12 +118,9 @@ $ git checkout -b <my_branch>    # create a new branch and checkout at the same 
 $ git checkout -b <my_branch> origin/my_remote_branch    # "download" a branch which was created remotely
 
 
-# merge some files from another my_branch_2 to current my_branch_1
-$ git checkout <my_branch_1>
-$ git checkout <my_branch_2> <my_files.csv>
-# checkout a file (my_change.py) from another branch (my_feature_2)
-git checkout my_feature_1
-git checkout my_feature_2 -- my_changes.java
+# checkout a file (my_file.py) from another branch - "my_branch_2"
+$ git checkout my_branch_1
+$ git checkout my_branch_2 -- my_file.py
 
 # update "my_feature_branch" with the latest "my_development_branch"; sync repositories
 $ git checkout <my_development>
