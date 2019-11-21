@@ -118,7 +118,7 @@ $ git checkout -b <my_branch>    # create a new branch and checkout at the same 
 $ git checkout -b <my_branch> origin/my_remote_branch    # "download" a branch which was created remotely
 
 
-# checkout a file (my_file.py) from another branch - "my_branch_2"
+# checkout a file "my_file.py" from another branch - "my_branch_2"
 $ git checkout my_branch_1
 $ git checkout my_branch_2 -- my_file.py
 
