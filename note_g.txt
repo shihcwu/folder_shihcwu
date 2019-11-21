@@ -4,7 +4,7 @@
 #####################################################################################
 
 # Git Bash
-$ ssh-keygen -t rsa -b 1024 -N "" -C my_email_address
+$ ssh-keygen -t rsa -b 1024 -N "" -C <my_email_address>
 
 
 $ git init <my_proj>
@@ -15,8 +15,8 @@ $ git remote add origin <https://my_URL>
 $ cat .git/config
 
 
-$ git config --global user.name "my_name"
-$ git config --global user.email "my_email_address"
+$ git config --global user.name <my_name>
+$ git config --global user.email <my_email_address>
 $ git config --global core.autocrlf true    # line endings
 $ git config --global color.ui auto
 $ git config --local user.name <my_name>
@@ -24,7 +24,7 @@ $ git config --list
 
 
 $ git add <my_file.txt>    # move file to "staging" area
-$ git commit -m "my_comments"    # --> which files in staging area become a part of which commit
+$ git commit -m "my_comments"    # determine which files in staging area become a part of which commit
 $ git commit --amend    # re-write previous commit descriptions
 
 
@@ -61,14 +61,14 @@ $ git log --stat -- <my_folder/my_file.txt>    # log stops after files are moved
 $ git log --stat -M --follow -- <my_folder/my_file.txt>    # log follows file across moves
 $ git log --patch    # show difference between commits
 $ git log --graph --all --decorate --oneline
-$ gitk --follow <my_file>    # track history of changes
+$ git log --oneline --decorate --graph --all -10    # show branch info
+$ gitk --follow <my_file.csv>    # track history of changes
 $ git show <my_commit_reference_id>    # changes from a commit
 
 
 $ git rm <my_file.txt>    # delete file from file system
-$ git rm --cached <my_file.txt>    # remove files from Git without deleting it in local (make it untracked file)
+$ git rm --cached <my_file.txt>    # remove files from "staging" area without deleting it in local (make it untracked file)
 $ git add -u .    # stage all deleted files (. tells git to start at current directory and recurse all the way down as far as it can go)
-$ git rm --cached <my_file.txt>    # remove file from "staging" area
 $ git rest    # "undo" git add . and remove file from "staging" area
 
 
@@ -84,6 +84,7 @@ myfile.txt
 *.log
 # comments inside .gitignore
 tmp_folder/    # ignore files in folder
+# Created by https://www.gitignore.io/api/python,pycharm
 #----- .gitignore -----
 
 
@@ -104,14 +105,11 @@ $ git stash
 $ git stash pop
 $ git checkout -b <my_branch>    # create a new branch and checkout at the same time
 $ git checkout -b <my_branch> origin/my_remote_branch    # "download" a branch which was created remotely
+
+
 # merge some files from another my_branch_2 to current my_branch_1
-$ git checkout my_branch_1
-$ git checkout my_branch_2 my_files
-
-
-# merge commits from "my branch" to "master"
-$ git checkout master
-$ git merge <my_branch>
+$ git checkout <my_branch_1>
+$ git checkout <my_branch_2> <my_files.csv>
 
 
 # update "my_feature_branch" with the latest "my_development_branch"; sync repositories
@@ -132,20 +130,20 @@ $ git merge --abort    # abort merge while having conflicts
 $ git merge --squash "target branch"    # commit but not history
 
 
-$ git log --oneline --decorate --graph --all -10    # show branch info
-
-
 # remote tracking branches (origin/*) are the middle way between branches at local laptop and at GitHub.com
 $ git remote add origin <my_destination_URL>    # setup location where we send information to from laptop; origin is the name of the destination
 $ git remote set-url origin <my_destination_URL>    # change URL
 $ git remote rm origin    # remove remote
 $ git remote -v
+$ git remote prune origin --dry-run    # remove local branches which are removed in remote server
+$ git remote prune origin
+
 
 # fetch, pull, push operations
 $ git fetch origin    # grab Github.com files to remote tracking branches
 $ git pull origin    # pull = fetch + merge
 $ git pull origin <my_branch>    # pull latest files from remote and ensure local "my_branch" is up to date (check???)
-$ git pull <my_development> <my_feature>    # merge development branch to feature branch; keep feature branch up to date (check???)
+$ git pull <my_development_branch> <my_feature_branch>    # merge development branch to feature branch; keep feature branch up to date (check???)
 $ git push origin    # only for all matching branches (local/remote)
 $ git push origin <my_feature_branch>    # only for my_feature_branch (local/remote)  (check???)
 $ git push -u origin master    # difference?
@@ -153,8 +151,6 @@ $ git push <my_remote_origin> <my_branch_master>    # if remote doesn't have mas
 $ git push origin --delete <my_remote_branch>    # delete remote branch
 $ git push --set-upstream origin <my_development_1>    # setup upstream for a branch
 $ git branch -vv    # find out which remote branch a local branch is tracking
-$ git remote prune origin --dry-run    # remove local branches which are removed in remote server
-$ git remote prune origin
 
 
 # git reset is for shaping history in repo
@@ -181,7 +177,7 @@ fi
 #----- change default home directory while opening git bash ------
 
 
-$ git clone http://login@url   # alternative: ssh
+$ git clone <http://login@url.git>    # alternative: ssh
 
 #----- Use pcron to sync GitHub repo/Unix automatically -----
 git clone <https://url.git> .
