@@ -1,26 +1,45 @@
+#####################################################################################
+# 2018/12
+# reference: https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB-
+#####################################################################################
+
 # Git Bash
-$ ssh-keygen -t rsa -b 1024 -N "" -C email_address
+$ ssh-keygen -t rsa -b 1024 -N "" -C my_email_address
 
 
-$ git init <my proj>
+$ git init <my_proj>
 $ open .git    # MAC
 
 
-$ git remote add origin <https://my url>
+$ git remote add origin <https://my_URL>
 $ cat .git/config
 
 
-$ git config --global user.name
-$ git config --global user.email
+$ git config --global user.name "my_name"
+$ git config --global user.email "my_email_address"
 $ git config --global core.autocrlf true    # line endings
 $ git config --global color.ui auto
-$ git config --local user.name <my name>
+$ git config --local user.name <my_name>
 $ git config --list
 
 
-$ git add <my file.txt>    # move file to "staging" area
-$ git commit -m "my comments - file modification"
-# --> which files in staging area become a part of which commit
+$ git add <my_file.txt>    # move file to "staging" area
+$ git commit -m "my_comments"    # --> which files in staging area become a part of which commit
+$ git commit --amend    # re-write previous commit descriptions
+
+
+# push local existing code to remote
+$ cd <my_existing_project>
+$ git init
+$ git add --all
+$ git commit -m "my_initial_commit"
+$ git remote add origin <https://my_URL>
+$ git push -u origin master
+
+# push local tracked code to remote
+$ cd <my_existing_project>
+$ git remote set-url origin <https://my_URL>
+$ git push -u origin master
 
 
 # 1. working tree, 2. staging area, 3. head (most recent commit)
@@ -32,25 +51,28 @@ $ git diff --color-words
 $ git diff --word-diff
 $ git diff --stat
 
-$ git diff --name-status <my branch 1>...<my branch 2>
+$ git diff --name-status <my_branch_1>...<my_branch_2>
 
 
 $ git log
 $ git log --oneline
 $ git log --stat
-$ git log --stat -- <my folder/my file.txt>    # log stops after files are moved
-$ git log --stat -M --follow -- <my folder/my file.txt>    # log follows file across moves
+$ git log --stat -- <my_folder/my_file.txt>    # log stops after files are moved
+$ git log --stat -M --follow -- <my_folder/my_file.txt>    # log follows file across moves
 $ git log --patch    # show difference between commits
 $ git log --graph --all --decorate --oneline
+$ gitk --follow <my_file>    # track history of changes
+$ git show <my_commit_reference_id>    # changes from a commit
 
 
-$ git rm <my file.txt>    # delete file from file system
+$ git rm <my_file.txt>    # delete file from file system
+$ git rm --cached <my_file.txt>    # remove files from Git without deleting it in local (make it untracked file)
 $ git add -u .    # stage all deleted files (. tells git to start at current directory and recurse all the way down as far as it can go)
-$ git rm --cached <my file.txt>    # remove file from "staging" area
+$ git rm --cached <my_file.txt>    # remove file from "staging" area
 $ git rest    # "undo" git add . and remove file from "staging" area
 
 
-$ git mv <old destination/my file.txt> <new destination/my file.txt>
+$ git mv <my_old_destination/my_file.txt> <my_new_destination/my_file.txt>
 $ git add -A .    # handle situation where lots of files are moved
 
 
@@ -67,31 +89,36 @@ tmp_folder/    # ignore files in folder
 
 $ git branch    # check which branch I'm on
 $ git branch -r    # r for remote
-$ git branch <my branch>    # create a new branch
-$ git branch -d <my branch>    # delete branch and info won't be shown in log
+$ git branch <my_branch>    # create a new branch
+$ git branch -d <my_branch>    # delete branch and info won't be shown in log
 $ git branch -a    # list both remote-tracking and local branches
 
 
 # checkout is for changing branches
-$ git checkout <my branch>    # changing branches
-$ git checkout <commit reference>    # detached HEAD; go back to previous version for exploring purpose
+$ git checkout <my_branch>    # changing branches
+$ git checkout <my_commit_reference>    # detached HEAD; go back to previous version for exploring purpose
 # latest node is called "head"
 $ git checkout master    # back to the latest version - master branch
-$ git checkout -- <my file.txt>    # undo/discard changes made to file
-$ git checkout -b <my branch>    # create a new branch and checkout at the same time
-$ git checkout -b <my branch> origin/myremotebranch    # "download" a branch which was created remotely
+$ git checkout -- <my_file.txt>    # undo/discard changes made to file
+$ git stash
+$ git stash pop
+$ git checkout -b <my_branch>    # create a new branch and checkout at the same time
+$ git checkout -b <my_branch> origin/my_remote_branch    # "download" a branch which was created remotely
+# merge some files from another my_branch_2 to current my_branch_1
+$ git checkout my_branch_1
+$ git checkout my_branch_2 my_files
 
 
 # merge commits from "my branch" to "master"
 $ git checkout master
-$ git merge <my branch>
+$ git merge <my_branch>
 
 
-# update "my feature branch" with the latest "my development branch"; sync repositories
-$ git checkout <my development>
-$ git pull origin <my development>
-$ git checkout <my feature>
-$ git merge <my development>
+# update "my_feature_branch" with the latest "my_development_branch"; sync repositories
+$ git checkout <my_development>
+$ git pull origin <my_development>
+$ git checkout <my_feature>
+$ git merge <my_development>
 
 
 # if there is a conflict while merging (@ master & merge feature branch to master)
@@ -109,37 +136,42 @@ $ git log --oneline --decorate --graph --all -10    # show branch info
 
 
 # remote tracking branches (origin/*) are the middle way between branches at local laptop and at GitHub.com
-$ git remote add origin <destination URL>    # setup location where we send information to from laptop; origin is the name of the destination
-$ git remote set-url origin <destination URL>    # change URL
+$ git remote add origin <my_destination_URL>    # setup location where we send information to from laptop; origin is the name of the destination
+$ git remote set-url origin <my_destination_URL>    # change URL
 $ git remote rm origin    # remove remote
 $ git remote -v
 
 # fetch, pull, push operations
 $ git fetch origin    # grab Github.com files to remote tracking branches
 $ git pull origin    # pull = fetch + merge
-$ git pull origin <my branch>    # pull latest files from remote and ensure local "my branch" is up to date (check???)
-$ git pull <my development> <my feature>    # merge development branch to feature branch; keep feature branch up to date (check???)
+$ git pull origin <my_branch>    # pull latest files from remote and ensure local "my_branch" is up to date (check???)
+$ git pull <my_development> <my_feature>    # merge development branch to feature branch; keep feature branch up to date (check???)
 $ git push origin    # only for all matching branches (local/remote)
-$ git push origin <my feature branch>    # only for my feature branch (local/remote)  (check???)
+$ git push origin <my_feature_branch>    # only for my_feature_branch (local/remote)  (check???)
 $ git push -u origin master    # difference?
-$ git push <myremote_origin> <mybranch_master>    # if remote doesn't have master, then you need to specify  (check???)
-$ git push origin --delete <myremotebranch>    # delete remote branch
+$ git push <my_remote_origin> <my_branch_master>    # if remote doesn't have master, then you need to specify  (check???)
+$ git push origin --delete <my_remote_branch>    # delete remote branch
+$ git push --set-upstream origin <my_development_1>    # setup upstream for a branch
+$ git branch -vv    # find out which remote branch a local branch is tracking
+$ git remote prune origin --dry-run    # remove local branches which are removed in remote server
+$ git remote prune origin
 
 
 # git reset is for shaping history in repo
 # git reset has - mixed(default), soft(combine commits), hard(erase things)
 $ git reset HEAD    # take changes out of staging area (mixed; default option)
 $ git reset --soft HEAD~2    # the most recent 2 commits
+$ git reset --soft HEAD~1    # use --soft if you want to keep your changes
 $ git reset --hard HEAD~3    # throw the most recent 3 commits away
-$ git checkout <commit reference> <old_file.txt>    # pull a specific version of file back to current repo
+$ git reset --hard HEAD~2    # use --hard if you don't care about keeping the changes you made
+$ git checkout <my_commit_reference> <my_old_file.txt>    # pull a specific version of file back to current repo
 
 # revert: create a new commit (commit + 1 from earlier commit)
 
 
 $ git reflog    # track commit made and discarded
-$ git reset --hard <commit reference>    # restore code base
+$ git reset --hard <my_commit_reference>    # restore code base
 
-$ gitk
 
 #----- change default home directory while opening git bash -----
 C:\Program Files\Git\etc\bash.bashrc
@@ -150,6 +182,7 @@ fi
 
 
 $ git clone http://login@url   # alternative: ssh
+
 #----- Use pcron to sync GitHub repo/Unix automatically -----
 git clone <https://url.git> .
  
@@ -163,6 +196,3 @@ pcrontab -e
 pcrontab -l
  
 nohup pcron &
-
-
-# resources: https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB-
