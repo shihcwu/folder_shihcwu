@@ -1999,6 +1999,63 @@ output {
 # examples of dates which Elasticsearch can recognize by default
 "2019-05-01" or "2019/05/01 13:15:30"
 
+# geo-distance
+PUT /examples_lat_long
+{
+    "mappings": {
+        "_doc": {
+            "properties": {
+                "my_address": {
+                    "properties": {
+                        "latlong": {
+                            "type": "geo_point"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+PUT /examples_lat_long/_doc/1
+{
+    "my_address" : {
+        "latlong" : {
+            "lat" : 32.936461,
+            "lon" : -117.234071
+        }
+    }
+}
+PUT /examples_lat_long/_doc/2
+{
+    "my_address" : {
+        "latlong" : {
+            "lat" : 32.936529,
+            "lon" : -117.233178
+        }
+    }
+}
+
+GET /examples_lat_long/_search
+{
+    "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "270ft",
+                    "my_address.latlong" : {
+                      "lat" : 32.936461,
+                      "lon" : -117.234071
+                    }
+                }
+            }
+        }
+    }
+}
+
 ########## other notes ##########
 
 
